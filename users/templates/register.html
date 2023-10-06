@@ -2,9 +2,7 @@
 {% load static %}
 
     {% block 'head' %}
-
-
-
+        <link href="{% static 'users/css/style.css' %}" rel="stylesheet">
     {% endblock 'head' %}
 
 
@@ -18,7 +16,7 @@
             <form action="" method="POST">
                 <div class="row">
                     <div class="col-md-3" style="text-align: center">
-                        <img src="" alt="">
+                        <img src="{% static 'general/img/logo.png' %}" alt="logo">
                         <h3>VitaLab</h3>
                     </div>
 
