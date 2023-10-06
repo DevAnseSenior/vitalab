@@ -13,7 +13,7 @@
         <div class="container">
             <h3 class="font-highlight">Register</h3>
 
-            <form action="" method="POST">
+            <form action="{% url 'register' %}" method="POST">{% csrf_token %}
                 <div class="row">
                     <div class="col-md-3" style="text-align: center">
                         <img src="{% static 'general/img/logo.png' %}" alt="logo">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <br>
-                <input type="submit" class="btn-default" value="Send">
+                <input type="submit" class="btn-default" value="Register">
             </form>
         </div>
     {% endblock %}
