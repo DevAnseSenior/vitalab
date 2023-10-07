@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.messages import constants
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 def register(request):
     if request.method == "GET":
@@ -41,3 +42,19 @@ def register(request):
             return redirect('/users/register')
         
         return redirect('/users/register')
+    
+def log_in(request):
+    if request.method == "GET":
+        return render(request, 'login.html')
+    elif request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            login(request, user)
+            return redirect('/')
+        else:
+            messages.add_message(request, constants.ERROR, 'Invalid Username and/or Password')
+            return redirect('/users/login')
