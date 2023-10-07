@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == "GET":
@@ -18,4 +19,18 @@ def register(request):
         if len(password) < 6:
             return redirect('/users/register')
         
-        return HttpResponse("Pass")
+        try:
+            existing_user = User.objects.filter(username=username).exists()
+            if not existing_user:
+                user = User.objects.create_user(
+                    first_name=first_name,
+                    last_name=last_name,
+                    username=username,
+                    email=email,
+                    password=password
+                )
+                return HttpResponse("Success")
+        except:
+            return redirect('/users/register')
+        
+        return redirect('/users/register')
