@@ -11,6 +11,11 @@
         <br>
         <br>
         <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}}">{{message}}</div>
+                {% endfor %}
+            {% endif %}
             <h3 class="font-highlight">Register</h3>
 
             <form action="{% url 'register' %}" method="POST">{% csrf_token %}

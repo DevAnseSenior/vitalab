@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib.messages import constants
+from django.contrib import messages
 
 def register(request):
     if request.method == "GET":
@@ -14,9 +16,11 @@ def register(request):
         confirm_password = request.POST.get('confirm_password')
 
         if not password == confirm_password:
+            messages.add_message(request, constants.ERROR, 'The passwords entered do not match')
             return redirect('/users/register')
         
         if len(password) < 6:
+            messages.add_message(request, constants.WARNING, 'Password must have 6 or more digits')
             return redirect('/users/register')
         
         try:
@@ -29,8 +33,11 @@ def register(request):
                     email=email,
                     password=password
                 )
-                return HttpResponse("Success")
+                messages.add_message(request, constants.SUCCESS, 'User registered successfully')
+            else:
+                messages.add_message(request, constants.ERROR, 'Error, username already registered')
         except:
+            messages.add_message(request, constants.ERROR, 'Internal system error, contact an administrator')
             return redirect('/users/register')
         
         return redirect('/users/register')
