@@ -1,0 +1,36 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block 'head' %}
+    <link href="{% static 'users/css/style.css' %}" rel="stylesheet">
+{% endblock 'head' %}
+
+{% block 'content' %}
+    <div class="container">
+
+        <h3 class="font-highlight-secondary"> <img width="10%" src="{% static 'general/img/logo.png' %}" alt="">Register</h3>
+
+        {% if messages %}
+            <br>
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <div>
+            <form action="{% url 'login' %}" method="POST">{% csrf_token %}
+                <label>Username</label>
+                <br>
+                <input type="text" class="input-default" name="username">
+                <br>
+                <br>
+                <label>Password</label>
+                <br>
+                <input type="password" class="input-default" name="password">
+                <br>
+                <br>
+                <input type="submit" class="btn-default" value="Log In">
+            </form>
+        </div>
+    </div>
+{% endblock %}
